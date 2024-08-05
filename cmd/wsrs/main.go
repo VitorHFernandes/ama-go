@@ -8,7 +8,7 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/VitorHFernandes/ama-go/internal/api"
+	"github.com/VitorHFernandes/ama-go/internal/api" // Corrigido
 	"github.com/VitorHFernandes/ama-go/internal/store/pgstore"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -26,6 +26,7 @@ func main() {
 		"user=%s password=%s host=%s port=%s dbname=%s",
 		os.Getenv("WSRS_DATABASE_USER"),
 		os.Getenv("WSRS_DATABASE_PASSWORD"),
+		os.Getenv("WSRS_DATABASE_HOST"), // Corrigido
 		os.Getenv("WSRS_DATABASE_PORT"),
 		os.Getenv("WSRS_DATABASE_NAME"),
 	))
@@ -40,7 +41,7 @@ func main() {
 		panic(err)
 	}
 
-	handler := api.NewHandler(pgstore.New(pool))
+	handler := api.NewHandler(pgstore.New(pool)) // Corrigido
 
 	go func() {
 		if err := http.ListenAndServe(":8080", handler); err != nil {
